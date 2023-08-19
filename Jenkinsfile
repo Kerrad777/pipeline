@@ -30,10 +30,10 @@ pipeline {
         stage('Push to repository') {
             steps {
                 withCredentials([
-                    usernamePassword(credentialsId: 'b72b54ef-81f8-48fc-8658-836d9fcee8a8', passwordVariable: 'Hameleon000', usernameVariable: 'Kerrad777@yandex.ru')
+                    usernamePassword(credentialsId: 'b72b54ef-81f8-48fc-8658-836d9fcee8a8', passwordVariable: 'Hameleon000', usernameVariable: 'Kerrad777')
                 ]) {
                     sh "git config --global user.email '\${GIT_USERNAME}'"
-                    sh "git config --global user.name 'Kerrad777@yandex.ru'"
+                    sh "git config --global user.name 'Kerrad777'"
                     sh "git push origin main"
                 }
             }
