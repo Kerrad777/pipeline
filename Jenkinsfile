@@ -1,34 +1,35 @@
 pipeline {
     agent any
     
+    parameters {
+        string(defaultValue: '', description: 'Student name', name: 'studentName')
+    }
+    
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: 'main']],
-                          doGenerateSubmoduleConfigurations: false,
-                          extensions: [],
-                          submoduleCfg: [],
-                          userRemoteConfigs: [[url: 'https://github.com/Kerrad777/pipeline.git']]
-                       ])
+                git branch: 'main',
+                    credentialsId: 'b72b54ef-81f8-48fc-8658-836d9fcee8a8',
+                    url: 'https://github.com/Kerrad777/DZZ.git'
             }
         }
         
-        stage('Install Dependencies') {
+        stage('Build') {
             steps {
                 sh 'pip install -r requirements.txt'
             }
         }
         
-        stage('Run hello.py') {
+        stage('Run script') {
             steps {
-                sh 'python hello.py -n "Yura" > result.txt'
+                sh 'python hello.py --name ${params.studentName}'
             }
         }
         
-        stage('Publish Artifact') {
+        stage('Save output') {
             steps {
-                archiveArtifacts 'result.txt'
+                sh 'echo $BUILD_OUTPUT > result.txt'
+                archiveArtifacts artifacts: 'result.txt', onlyIfSuccessful: true
             }
         }
     }
