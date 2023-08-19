@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Run Script') {
             steps {
-                sh 'python hello.py --name student_name > result.txt'
+                sh 'python hello.py --name ${params.student_name} > result.txt'
             }
         }
         stage('Save Result as Artifact') {
