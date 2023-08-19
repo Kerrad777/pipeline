@@ -44,7 +44,7 @@ pipeline {
         }
         stage('Push to repository') {
             steps {
-                sh 'git push'
+                sh sh 'git push --set-upstream origin main'
             }
         }
     }
