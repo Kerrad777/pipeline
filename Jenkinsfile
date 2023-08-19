@@ -34,7 +34,7 @@ pipeline {
                 ]) {
                     sh "git config --global user.email '\${GIT_USERNAME}'"
                     sh "git config --global user.name 'Kerrad777@yandex.ru'"
-                    sh "git push --set-upstream origin main"
+                    sh "git push origin main"
                 }
             }
         }
