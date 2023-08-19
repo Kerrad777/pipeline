@@ -1,4 +1,7 @@
 pipeline {
+    triggers {
+        pollSCM '*/3 * * * *'
+    }
     agent any
     parameters {
         string(defaultValue: '', description: 'Student name', name: 'studentName')
@@ -25,15 +28,6 @@ pipeline {
             steps {
                 sh 'echo $BUILD_OUTPUT > result.txt'
                 archiveArtifacts artifacts: 'result.txt', onlyIfSuccessful: true
-            }
-        }
-        stage('Push to repository') {
-    steps {
-        withCredentials([usernamePassword(credentialsId: 'b72b54ef-81f8-48fc-8658-836d9fcee8a8')]) {
-            sh "git config --global user.email '\${GIT_USERNAME}'"
-            sh "git config --global user.name '\${GIT_USERNAME}'"
-            sh "git push origin main"
-                }
             }
         }
     }
