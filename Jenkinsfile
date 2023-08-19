@@ -22,7 +22,7 @@ pipeline {
         
         stage('Run script') {
             steps {
-                sh 'python hello.py --name $params.studentName'
+                sh 'python hello.py --name ${env.params.studentName}'
             }
         }
         
