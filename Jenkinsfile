@@ -20,7 +20,7 @@ pipeline {
                 ])
                 git branch: 'main',
                 credentialsId: 'b72b54ef-81f8-48fc-8658-836d9fcee8a8',
-                url: 'https://github.com/Kerrad777/DZZ.git'
+                url: 'https://github.com/Kerrad777/pipeline.git'
             }
         }
         stage('Build') {
@@ -36,6 +36,8 @@ pipeline {
         stage('Save output') {
             steps {
                 sh 'mkdir -p output && echo $BUILD_OUTPUT > output/result.txt'
+                sh 'git config --global user.email "Kerrad777@yandex.ru"'
+                sh 'git config --global user.name "Yura"'
                 sh 'git add output/result.txt'
                 sh 'git commit -m "Add result.txt"'
             }
