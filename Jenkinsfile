@@ -33,7 +33,7 @@ pipeline {
                     usernamePassword(credentialsId: 'b72b54ef-81f8-48fc-8658-836d9fcee8a8', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')
                 ]) {
                     sh "git config --global user.email '${GIT_USERNAME}'"
-                    sh "git config --global user.name 'Your Name'"
+                    sh "git config --global user.name 'Kerrad777'"
                     sh "git push --set-upstream origin main"
                 }
             }
