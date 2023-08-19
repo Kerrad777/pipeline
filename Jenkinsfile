@@ -1,7 +1,7 @@
 pipeline {
     agent any
     triggers {
-        pollSCM '*/3 * * * *'
+        pollSCM '*/1 * * * *'
     }
     parameters {
         string(defaultValue: '', description: 'Student name', name: 'studentName')
@@ -9,9 +9,18 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                checkout([
+                  $class: 'GitSCM',
+                  branches: [[name: 'main']],
+                  userRemoteConfigs: [[
+                    url: 'https://github.com/Kerrad777/DZZ.git',
+                    credentialsId: 'b72b54ef-81f8-48fc-8658-836d9fcee8a8'
+                  ]],
+                  skipDefaultCheckout: true
+                ])
                 git branch: 'main',
                 credentialsId: 'b72b54ef-81f8-48fc-8658-836d9fcee8a8',
-                url: 'https://github.com/Kerrad777/pipeline.git'
+                url: 'https://github.com/Kerrad777/DZZ.git'
             }
         }
         stage('Build') {
@@ -26,8 +35,14 @@ pipeline {
         }
         stage('Save output') {
             steps {
-                sh 'echo $BUILD_OUTPUT > result.txt'
-                archiveArtifacts artifacts: 'result.txt', onlyIfSuccessful: true
+                sh 'mkdir -p output && echo $BUILD_OUTPUT > output/result.txt'
+                sh 'git add output/result.txt'
+                sh 'git commit -m "Add result.txt"'
+            }
+        }
+        stage('Push to repository') {
+            steps {
+                sh 'git push'
             }
         }
     }
