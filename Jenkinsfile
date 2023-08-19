@@ -1,7 +1,7 @@
 pipeline {
     agent any
     triggers {
-        pollSCM '*/1 * * * *'
+        pollSCM '*/3 * * * *'
     }
     parameters {
         string(defaultValue: '', description: 'Student name', name: 'studentName')
@@ -13,7 +13,7 @@ pipeline {
                   $class: 'GitSCM',
                   branches: [[name: 'main']],
                   userRemoteConfigs: [[
-                    url: 'https://github.com/Kerrad777/DZZ.git',
+                    url: 'https://github.com/Kerrad777/pipeline.git',
                     credentialsId: 'b72b54ef-81f8-48fc-8658-836d9fcee8a8'
                   ]],
                   skipDefaultCheckout: true
